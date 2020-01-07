@@ -3,6 +3,7 @@
 
 <@c.page>
 <div><@l.logout /></div>
+<span><a href="/user">User list</a></span>
 <div>
     <form method="post">
         <input type="hidden" name="_csrf" value="${_csrf.token}">
