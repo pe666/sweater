@@ -1,6 +1,8 @@
 package com.example.sweater.domain;
 
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,6 +16,8 @@ public class Message {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User author;
+
+    private String filename;
 
     public Message() {
     }
@@ -48,15 +52,13 @@ public class Message {
         return text;
     }
 
-    public String getTag() {
-        return tag;
-    }
+    public String getTag() { return tag; }
 
-    public User getUser() {
-        return author;
-    }
+    public User getAuthor() { return author; }
 
-    public void setUser(User user) {
-        this.author = user;
-    }
+    public void setAuthor(User author) { this.author = author; }
+
+    public String getFilename() { return filename; }
+
+    public void setFilename(String filename) { this.filename = filename; }
 }
