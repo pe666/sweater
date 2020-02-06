@@ -1,38 +1,51 @@
 <#import "parts/common.ftl" as c>
-<#import "parts/login.ftl" as l>
 
 <@c.page>
-<div><@l.logout /></div>
-<span><a href="/user">User list</a></span>
-<div>
+<form method="get" action="home">
+    <div class="input-group mb-3">
+        <input value="${filter!}" type="text" class="form-control" placeholder="Find by tag" aria-label="Recipient's username" aria-describedby="button-addon2" name="filter">
+        <div class="input-group-append">
+            <button class="btn btn-dark" type="submit" id="button-addon2">Search</button>
+        </div>
+    </div>
+</form>
+<a class="btn btn-dark my-3" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Add new message
+</a>
+<div class="collapse" id="collapseExample">
     <form method="post" enctype="multipart/form-data">
-        <input type="hidden" name="_csrf" value="${_csrf.token}">
-        <input type="text", name="text">
-        <input type="text", name="tag">
-        <input type="file" name="file">
-        <button type="submit">Добавить</button>
+        <div class="form-group">
+            <input type="hidden" name="_csrf" value="${_csrf.token}">
+            <input class="form-control" type="text", name="text" placeholder="Message">
+            <input class="form-control" type="text", name="tag" placeholder="#tag">
+            <div class="custom-file">
+                <input class="form-control custom-file-input" type="file" name="file" id="customFile">
+                <label class="custom-file-label" for="customFile">Choose file</label>
+            </div>
+            <button type="submit" class="btn btn-dark">Add message</button>
+        </div>
     </form>
 </div>
-<div>Список сообщений</div>
-<div>
-    <form method="get" action="home">
-        <input type="text", name="filter" value="${filter!}">
-        <button type="submit">Search</button>
-    </form>
-</div>
+<div class="card-columns">
 <#list messages as message>
-<div>
-    <b>${message.id}</b>
-    <span>${message.text}</span>
-    <i>${message.tag}</i>
-    <strong>${message.authorName}</strong>
+<div class="card" style="width: 18rem;">
     <div>
         <#if message.filename??>
-            <img src="/img/${message.filename}">
-        </#if>
+        <img class="card-img-top" src="/img/${message.filename}">
+    </#if>
     </div>
+    <div class="card-body">
+        <span class="card-text">${message.text}</span>
+        <i>#${message.tag}</i>
+        <div class="card-footer text-muted">
+            @${message.authorName}
+        </div>
+
+    </div>
+
 </div>
 <#else>
 No messages
 </#list>
+</div>
 </@c.page>
