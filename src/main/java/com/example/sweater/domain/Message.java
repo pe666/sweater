@@ -1,16 +1,21 @@
 package com.example.sweater.domain;
 
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Length(max = 255, message = "Message too long")
+    @NotBlank(message = "Text field can't be empty")
     private String text;
+    @NotBlank(message = "Tag field can't be empty")
     private String tag;
 
     @ManyToOne(fetch = FetchType.EAGER)
